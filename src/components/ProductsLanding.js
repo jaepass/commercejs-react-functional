@@ -4,14 +4,13 @@ import { commerce } from '../lib/Commerce';
 import ProductCard from './ProductCard';
 import Cart from './Cart';
 
-class ProductsContainer extends Component {
+class ProductsLanding extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             products: [],
-            cart: {},
-            // toggleCart: false
+            cart: {}
         }
 
         this.handleAddToCart = this.handleAddToCart.bind(this);
@@ -24,7 +23,6 @@ class ProductsContainer extends Component {
         this.fetchProducts();
         this.fetchCart();
     }
-
 
     /**
      * Fetch the list of products from Chec's API
@@ -41,6 +39,8 @@ class ProductsContainer extends Component {
 
     /**
      * Handle add product to cart
+     * 
+     * @param {object} product
      */
     handleAddToCart(product) {
         commerce.cart.add({ id: product.id }, 1)
@@ -54,9 +54,11 @@ class ProductsContainer extends Component {
 
     /**
      * Handle remove line item from cart
+     * 
+     * @param {string} lineItemId
      */
-    handleRemoveFromCart(lineItem) {
-        commerce.cart.remove(lineItem)
+    handleRemoveFromCart(lineItemId) {
+        commerce.cart.remove(lineItemId)
             .then((res) => {
                 this.setState({
                     cart: res.cart
@@ -67,6 +69,9 @@ class ProductsContainer extends Component {
 
     /**
      * Handle update cart quantity
+     * 
+     * @param {string} lineItemId
+     * @param {number} qty
      */
     handleUpdateCartQty(lineItemId, qty) {
         commerce.cart.update(lineItemId, { quantity: qty })
@@ -133,4 +138,4 @@ class ProductsContainer extends Component {
     }
 }
 
-export default ProductsContainer;
+export default ProductsLanding;

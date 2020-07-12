@@ -1,11 +1,12 @@
 import React from "react";
+import './styles/scss/styles.scss'
 
-import ProductsContainer from "./components/ProductsContainer";
+import ProductsLanding from "./components/ProductsLanding";
 
 const App = () => {
   return (
-    <div className="container">
-      <ProductsContainer />
+    <div className="app">
+      <ProductsLanding />
     </div>
   );
 };

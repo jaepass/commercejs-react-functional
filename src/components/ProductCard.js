@@ -29,7 +29,7 @@ class ProductCard extends Component {
                 className="add-btn"
                 onClick={this.handleAddToCart}
             >
-                Add to cart
+                Quick add
             </button>
           </div>
         );

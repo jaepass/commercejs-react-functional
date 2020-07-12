@@ -26,6 +26,7 @@ class Cart extends Component {
 
         return (
             <div className="cart">
+                <div className="cart__heading">Your Shopping Cart</div>
                 <>
                     {cart.total_unique_items > 0 ? (
                         <>
@@ -39,14 +40,14 @@ class Cart extends Component {
                                 <div className="cart__remove" onClick={() => this.handleRemoveFromCart(item.id)}>Remove</div>
                             </div>
                         ))}
+                        <div className="cart__empty" onClick={this.handleEmptyCart}>Empty cart</div>
                         </>
                     ) : (
-                        <div className="cart__empty">
-                            Your cart is empty
-                        </div>
+                    <div className="cart__empty">
+                        Your cart is empty =( Add some cool products to your cart!
+                    </div>
                     )}
                 </>
-                <div className="cart__empty" onClick={this.handleEmptyCart}>Empty cart</div>
             </div>
         );
     };

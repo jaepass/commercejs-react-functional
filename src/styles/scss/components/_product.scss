@@ -1,0 +1,28 @@
+.card {
+    background-color: $bg-color;
+
+    img {
+        border: 2px solid $text-primary;
+    }
+
+    .title {
+        color: $text-primary;
+    }
+
+    button {
+        border: 1px solid $color-accent;
+        background: transparent;
+        color: $color-accent;
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        margin: 0 auto;
+        padding: 5px 10px;
+
+        &:hover {
+        background: $color-accent;
+        color: white;
+        }
+    }
+}
+
+
