@@ -1,6 +1,40 @@
 .cart {
-    height: 400px;
-    width: 300px;
+    width: 600px;
     background-color: white;
     border: 2px solid $text-primary;
+    padding: 30px 20px;
+
+    &__item {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    &__details {
+        justify-content: space-between;
+    }
+
+    &__img {
+        width: 15%;
+    }
+
+    &__qty {
+        margin-right: 0;
+    }
+
+    &__qty-add {
+        cursor: pointer;
+    }
+
+    &__qty-minus {
+        cursor: pointer;
+    }
+
+    &__qty-remove {
+        cursor: pointer;
+    }
+
+    &__remove {
+        padding: 3px 2px;
+        cursor: pointer;
+    }
 }

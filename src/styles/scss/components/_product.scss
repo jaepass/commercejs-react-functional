@@ -5,9 +5,32 @@
         border: 2px solid $text-primary;
     }
 
-    .title {
+    &__details {
+        border: 2px solid $text-primary;
+        border-top: 0;
+    }
+
+    &__details-title {
         color: $text-primary;
     }
+
+    &__details-footer {
+        display: flex;
+        justify-content: space-between;
+
+        .price {
+            align-self: center;
+            margin: 0;
+            color: $text-grey;
+
+        }
+
+        button {
+            margin: 0 !important;
+        }
+    }
+
+
 
     button {
         border: 1px solid $color-accent;
