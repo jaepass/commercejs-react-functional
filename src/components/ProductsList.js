@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { commerce } from '../lib/Commerce';
 
-import ProductCard from './ProductCard';
+import ProductItem from './ProductItem';
 import Cart from './Cart';
 
 class ProductsLanding extends Component {
@@ -114,19 +114,14 @@ class ProductsLanding extends Component {
         const { products, cart } = this.state;
 
         return (
-            <div className="container mx-auto px-4">
-                <div className="flex mb-4">
-                    <div className="row">
-                        {products.map((product) => (
-                            <div className="col-sm-4" key={product.id}>
-                                <ProductCard 
-                                    product={product}
-                                    onAddToCart={this.handleAddToCart}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            <div className="products">
+                {products.map((product) => (
+                    <ProductItem
+                        key={product.id}
+                        product={product}
+                        onAddToCart={this.handleAddToCart}
+                    />
+                ))}
                 <Cart 
                     cart={cart}
                     onUpdateCartQty={this.handleUpdateCartQty}

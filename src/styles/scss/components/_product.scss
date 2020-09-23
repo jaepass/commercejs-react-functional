@@ -1,38 +1,40 @@
-.card {
-    background-color: $bg-color;
+.product {
+    &__card {
+        margin: auto;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 2rem;
+    }
 
-    img {
+    &__image {
         border: 2px solid $text-primary;
+    }
+
+    &__name {
+        color: $text-primary;
+        padding-top: 1rem;
+        padding-bottom: 0.25rem;
     }
 
     &__details {
-        border: 2px solid $text-primary;
-        border-top: 0;
-    }
-
-    &__details-title {
-        color: $text-primary;
-    }
-
-    &__details-footer {
         display: flex;
         justify-content: space-between;
+        margin-top: 0.75rem;
+    }
 
-        .price {
-            align-self: center;
-            margin: 0;
-            color: $text-grey;
-
-        }
-
-        button {
-            margin: 0 !important;
-        }
+    &__price {
+        align-self: center;
+        margin: 0;
+        color: $text-grey;
     }
 
 
+    &__details {
+        display: flex;
+        justify-content: space-between;
+    }
 
-    button {
+    &__btn {
         border: 1px solid $color-accent;
         background: transparent;
         color: $color-accent;
@@ -46,6 +48,24 @@
         color: white;
         }
     }
+
 }
+
+.products {
+    display: block;
+    margin: 3rem;
+
+    @include md {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        margin: 10rem;
+    }
+}
+
+
+
+
+
+
 
 

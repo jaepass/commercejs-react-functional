@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Cart extends Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class Cart extends Component {
                         {cart.line_items.map(item => (
                             <div key={item.id} className="cart__item d-flex">
                                 <img className="cart__img" src={item.media.source} alt={item.name} />
-                                <div class="cart__details d-flex">
+                                <div className="cart__details d-flex">
                                     <div className="d-block">
                                         <div className="cart__name">{item.name}</div>
                                         <div className="cart__name">{item.price.formatted_with_symbol}</div>
@@ -65,3 +66,10 @@ class Cart extends Component {
 };
 
 export default Cart;
+
+Cart.propTypes = {
+    cart: PropTypes.object,
+    onUpdateCartQty: PropTypes.func,
+    onRemoveFromCart: PropTypes.func,
+    onEmptyCart: PropTypes.func, 
+ };

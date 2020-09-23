@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
-class ProductCard extends Component {
+class ProductItem extends Component {
     constructor(props) {
         super(props);
 
@@ -16,18 +17,18 @@ class ProductCard extends Component {
         const reg = /(<([^>]+)>)/gi;
       
         return (
-          <div className="card my-5 border-0">
-            <img className="card-img-top" src={product.media.source} alt={product.name} />
-            <div className="card__details p-4">
-                <h4 className="card__details-title text-center display-5 pt-2">{product.name}</h4>
-                <p className="text-center card-text display-5 pt-2">
+          <div className="product__card">
+            <img className="product__image" src={product.media.source} alt={product.name} />
+            <div className="product__info">
+                <h4 className="product__name">{product.name}</h4>
+                <p className="product__description">
                 {(product.description || "").replace(reg, "")}
                 </p>
-                <div className="card__details-footer d-flex pt-2">
-                    <p className="text-center display-5 price">
+                <div className="product__details">
+                    <p className="product__price">
                     {product.price.formatted_with_symbol}
                     </p>
-                    <button
+                    <button className="product__btn"
                         onClick={this.handleAddToCart}
                     >
                         Quick add
@@ -40,4 +41,9 @@ class ProductCard extends Component {
   };
 
 
-export default ProductCard;
+export default ProductItem;
+
+ProductItem.propTypes = {
+    product: PropTypes.object,
+    onAddToCart: PropTypes.func,
+ };
