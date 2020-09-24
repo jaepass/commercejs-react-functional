@@ -9,12 +9,11 @@ class ProductsList extends Component {
 
         return (
             <>
-                <div className="products">
+                <div className="products" id="products">
                     {products.map((product) => (
                         <ProductItem
                             key={product.id}
                             product={product}
-                            onAddToCart={this.props.handleAddToCart}
                         />
                     ))}
                 </div>
@@ -27,6 +26,4 @@ export default ProductsList;
 
 ProductsList.propTypes = {
     products: PropTypes.array,
-    handleAddToCart: PropTypes.func,
-    onAddToCart: PropTypes.func,
 };
