@@ -1,67 +1,74 @@
-.product {
-    &__card {
-        margin: auto;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding-bottom: 2rem;
-    }
-
-    &__image {
-        border: 2px solid $text-primary;
-    }
-
-    &__name {
-        color: $text-primary;
-        padding-top: 1rem;
-        padding-bottom: 0.25rem;
-    }
-
-    &__details {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 0.75rem;
-    }
-
-    &__price {
-        align-self: center;
-        margin: 0;
-        color: $text-grey;
-    }
-
-
-    &__details {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    &__btn {
-        border: 1px solid $color-accent;
-        background: transparent;
-        color: $color-accent;
-        transition: all 0.3s ease-in-out;
-        display: flex;
-        margin: 0 auto;
-        padding: 5px 10px;
-
-        &:hover {
-        background: $color-accent;
-        color: white;
-        }
-    }
-
-}
-
 .products {
     display: block;
     margin: 3rem;
 
     @include md {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         margin: 10rem;
     }
-}
 
+    .product {
+
+        &__card {
+            width: 55%;
+            margin: auto;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-bottom: 2rem;
+        }
+
+        &__image {
+            border: 2px solid $text-primary;
+            width: 90%;
+        }
+    
+        &__name {
+            color: $text-primary;
+            padding-top: 1rem;
+            padding-bottom: 0.25rem;
+        }
+    
+        &__details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.75rem;
+        }
+    
+        &__price {
+            align-self: center;
+            margin: 0;
+            color: $text-grey;
+        }
+    
+    
+        &__details {
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        &__btn {
+            background: $color-accent;
+            color: white;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease-in-out;
+            margin-top: 1rem;
+            border: none;
+    
+            &:hover {
+                background-color: lighten(#EF4E42, 5);
+            }
+
+            @include sm {
+                margin-top: 0;
+            }
+        }
+
+    }
+
+}
 
 
 

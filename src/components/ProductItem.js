@@ -9,7 +9,7 @@ class ProductItem extends Component {
     }
 
     handleAddToCart() {
-        this.props.onAddToCart(this.props.product);
+        this.props.onAddToCart(this.props.product.id, 1);
     }
 
     render() {
@@ -28,7 +28,9 @@ class ProductItem extends Component {
                     <p className="product__price">
                     {product.price.formatted_with_symbol}
                     </p>
-                    <button className="product__btn"
+                    <button
+                        name="Add to cart"
+                        className="product__btn"
                         onClick={this.handleAddToCart}
                     >
                         Quick add
@@ -46,4 +48,5 @@ export default ProductItem;
 ProductItem.propTypes = {
     product: PropTypes.object,
     onAddToCart: PropTypes.func,
+    handleAddToCart: PropTypes.func,
  };

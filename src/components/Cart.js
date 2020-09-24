@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { commerce } from '../lib/Commerce';
 import PropTypes from 'prop-types';
+import CartItem from './CartItem';
 
 class Cart extends Component {
     constructor(props) {
@@ -10,8 +12,8 @@ class Cart extends Component {
         this.handleEmptyCart = this.handleEmptyCart.bind(this);
     }
 
-    handleUpdateCartQty(lineItemId, quantity) {
-        this.props.onUpdateCartQty(lineItemId, quantity)
+    handleUpdateCartQty(lineItemId, newQuantity) {
+        this.props.onUpdateCartQty(lineItemId, newQuantity)
     }
 
     handleRemoveFromCart(lineItemId) {
@@ -27,36 +29,31 @@ class Cart extends Component {
 
         return (
             <div className="cart">
-                <div className="cart__heading">
-                    <h4>Your Shopping Cart</h4>
-                </div>
+                <h4 className="cart__heading">Your Shopping Cart</h4>
                 <>
                     {cart.total_unique_items > 0 ? (
                         <>
-                        {cart.line_items.map(item => (
-                            <div key={item.id} className="cart__item d-flex">
-                                <img className="cart__img" src={item.media.source} alt={item.name} />
-                                <div className="cart__details d-flex">
-                                    <div className="d-block">
-                                        <div className="cart__name">{item.name}</div>
-                                        <div className="cart__name">{item.price.formatted_with_symbol}</div>
-                                    </div>
-                                    <div className="cart__qty d-flex">
-                                        <div className="cart__qty-minus" onClick={() => item.quantity > 1 ? this.handleUpdateCartQty(item.id, item.quantity - 1) : this.handleRemoveFromCart(item.id)}>-</div>
-                                        <div className="cart__qty-count">{item.quantity}</div>
-                                        <div className="cart__qty-add" onClick={() => this.handleUpdateCartQty(item.id, item.quantity + 1)}>+</div>
-                                        <p className="cart__qty-remove" onClick={() => this.handleRemoveFromCart(item.id)}>Remove</p>
-                                    </div>
-                                </div>
-                            </div>
+                        {cart.line_items.map(lineItem => (
+                            <CartItem
+                                item={lineItem}
+                                key={lineItem.id}
+                                onUpdateCartQty={this.handleUpdateCartQty}
+                                onRemoveFromCart={this.handleRemoveFromCart}
+                                className="cart__inner"
+                            />
                         ))}
-                        <div className="cart__total">Subtotal:</div>
-                        <div className="cart__total-price">{cart.subtotal.formatted_with_symbol}</div>
-                        <button className="cart__empty" onClick={this.handleEmptyCart}>Empty cart</button>
+                        <div className="cart__total">
+                            <p className="cart__total-title">Subtotal:</p>
+                            <p className="cart__total-price">{cart.subtotal.formatted_with_symbol}</p>
+                        </div>
+                        <div className="cart__footer">
+                            <button className="cart__btn-empty" onClick={this.handleEmptyCart}>Empty cart</button>
+                            <button className="cart__btn-checkout">Checkout</button> 
+                        </div>
                         </>
                     ) : (
-                    <p className="cart__empty">
-                        Your cart is empty =( Add some cool products to your cart!
+                    <p className="cart__none">
+                       You have no items in your shopping cart, start adding some!
                     </p>
                     )}
                 </>
@@ -69,7 +66,8 @@ export default Cart;
 
 Cart.propTypes = {
     cart: PropTypes.object,
-    onUpdateCartQty: PropTypes.func,
-    onRemoveFromCart: PropTypes.func,
-    onEmptyCart: PropTypes.func, 
+    onUpdateCartQty: () => {},
+    onRemoveFromCart: () => {},
+    onEmptyCart: () => {},
+    handleUpdateCartQty: PropTypes.func
  };
