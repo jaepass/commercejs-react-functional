@@ -10,8 +10,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-        merchant: {},
-        products: [],
+      merchant: {},
+      products: [],
     }
   }
 
@@ -33,11 +33,11 @@ class App extends Component {
    * https://commercejs.com/docs/sdk/products
    */
   fetchProducts() {
-      commerce.products.list().then((products) => {
-        this.setState({ products: products.data });
-      }).catch((error) => {
-        console.log('There was an error fetching the products', error);
-      });
+    commerce.products.list().then((products) => {
+      this.setState({ products: products.data });
+    }).catch((error) => {
+      console.log('There was an error fetching the products', error);
+    });
   }
 
   render() {

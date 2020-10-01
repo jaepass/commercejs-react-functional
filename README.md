@@ -334,16 +334,16 @@ individual product card. In your render function destructure `product` from your
 property to access each product's image, name, description, and price via `.media.source`, `.name`, `.description` and
 `.price` in the return statement.
 
-Product descriptions return HTML. If you want to use it, you can use `__dangerouslySetInnerHTML()` to render it. If
-not, the regular expression here will remove HTML tags (todo use a library instead).
+Product descriptions return HTML. To strip HTML from the product description string, using [this `string-strip-html`](https://codsen.com/os/string-strip-html/) handy library will do the trick. Install this library by running `yarn add string-strip-html` or `npm i string-strip-html`. After installing, import the module in and pass in the product description to the `stripHtml` function.
 
 ```jsx
 import React, { Component } from "react";
+import stripHtml from 'string-strip-html';
 
 class ProductItem extends Component {
   render() {
     const { product } = this.props
-    const reg = /(<([^>]+)>)/gi;
+    const { result } = stripHtml(product.description);
 
     return (
       <div className="product__card">
@@ -351,7 +351,8 @@ class ProductItem extends Component {
         <div className="product__info">
           <h4 className="product__name">{product.name}</h4>
           <p className="product__description">
-          {(product.description || "").replace(reg, "")}
+            {/* product description stripped of html tags */}
+            {result}
           </p>
           <div className="product__details">
             <p className="product__price">
