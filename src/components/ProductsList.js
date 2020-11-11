@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ProductItem from './ProductItem';
 
-class ProductsList extends Component {
+const ProductsList = ({ products, onAddToCart }) => {
 
-    render() {
-        const { products } = this.props;
-
-        return (
-            <>
-                <div className="products" id="products">
-                    {products.map((product) => (
-                        <ProductItem
-                            key={product.id}
-                            product={product}
-                        />
-                    ))}
-                </div>
-            </>
-        )
-    }
+    return (
+        <>
+            <div className="products" id="products">
+                {products.map((product) => (
+                    <ProductItem
+                        key={product.id}
+                        product={product}
+                        onAddToCart={onAddToCart}
+                    />
+                ))}
+            </div>
+        </>
+    )
 }
 
 export default ProductsList;

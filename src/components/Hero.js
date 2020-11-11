@@ -17,7 +17,6 @@ const Hero = ({ merchant }) => {
 
 export default Hero;
 
-
 Hero.propTypes = {
     merchant: PropTypes.object,
 };
