@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 import { commerce } from './lib/Commerce';
 
 import './styles/scss/styles.scss'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faShoppingBag, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import Hero from './components/Hero';
-import ProductsList from "./components/ProductsList";
+import ProductsList from './components/ProductsList';
+import CartNav from './components/CartNav';
+
+library.add(faShoppingBag, faTimes);
 
 const App = () => {
   const [merchant, setMerchant] = useState({});
@@ -76,6 +81,9 @@ const App = () => {
 
   return (
     <div className="app">
+      <CartNav 
+        cart={cart}
+      />
       <Hero
         merchant={merchant}
       />

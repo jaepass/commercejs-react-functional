@@ -1,0 +1,129 @@
+.cart {
+    width: 350px;
+    background-color: white;
+    border: 2px solid $text-primary;
+    display: fixed;
+    z-index: 1;
+    top: 1.25rem;
+    right: 1.25rem;
+    height: auto;
+    position: fixed;
+
+    &__heading {
+        padding: 0.95rem 1rem;
+        font-weight: bold;
+        border-bottom: 2px solid $text-primary;
+        color: $text-primary;
+        font-size: 1.25rem;
+    }
+
+    &__inner {
+        padding: 1.25rem;
+    }
+
+    &__total {
+        display: flex;
+        padding: 1rem 1.25rem 0;
+        border-top: 2px solid $text-primary;
+        justify-content: space-between;
+    }
+
+    &__total-title {
+        color: $text-primary;
+        font-weight: bold;
+    }
+
+    &__none {
+        padding: 1.25rem;
+        color: $text-primary;
+        text-align: center;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__btn-empty {
+        align-self: flex-start;
+        background-color: white;
+        border: 2px solid $text-primary;
+        padding-left: 1.25rem;
+        padding: 0.5rem 0.75rem;
+        margin: 0 1.25rem 1.25rem;
+        text-transform: uppercase;
+        color: $text-primary;
+        font-weight: bold;
+        font-size: 0.75rem;
+    }
+
+    &__btn-checkout {
+        background-color: $text-primary;
+        border: 2px solid $text-primary;
+        padding-left: 1.25rem;
+        padding: 0.5rem 0.75rem;
+        margin: 0 1.25rem 1.25rem;
+        text-transform: uppercase;
+        color: white;
+        font-weight: bold;
+        font-size: 0.75rem;
+
+        &:hover {
+            background-color: lighten(#292B83, 10);
+        }
+    }
+
+    .cart-item {
+        display: flex;
+        padding: 1.25rem;
+    
+        &__image {
+            width: 4rem;
+            height: 4rem;
+            object-fit: cover;
+            border: 2px solid $color-accent;
+            margin-right: 0.75rem;
+        }
+
+        &__details-name {
+            font-size: 0.98rem;
+            color: $text-primary;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        &__details-qty {
+            display: flex;
+            margin: 0 auto;
+            margin-bottom: 0;
+            font-size: 1rem;
+
+            button {
+                border: none;
+                background: none;
+                font-size: 1.25rem;
+            }
+
+            p {
+                margin-bottom: 0;
+                margin-top: 3px;
+            }
+        }
+
+        &__details-price {
+            font-size: 0.875rem;
+        }
+    
+        &__remove {
+            background-color: white;
+            border: 2px solid $text-primary;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            text-transform: uppercase; 
+            color: $text-primary;
+            font-weight: bold;
+            margin-left: auto;
+            align-self: flex-start;
+        }
+    }
+}

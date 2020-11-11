@@ -1,0 +1,38 @@
+.nav {
+    position: fixed;
+    top: 1rem;
+    right: 1.25rem;
+    z-index: 999;
+
+    &__cart {
+        span {
+            font-size: 14px;
+            font-style: bold;
+            background-color: $color-accent;
+            color: white;
+            padding: 0 0.25rem;
+            margin-left: -0.5rem;
+            border-radius: 50%;
+            vertical-align: top;
+        }
+    }
+
+    &__cart-open {
+        border: none;
+    }
+
+    &__cart-close {
+        background-color: $text-primary;
+        padding: 0 0.25rem;
+        color: white;
+        margin-left: -0.25rem;
+        margin-top: -0.25rem;
+        margin-right: -0.5rem;
+        border-radius: 50%;
+        vertical-align: top;
+        width: 2.25rem;
+        height: 2.25rem;
+        border: none;
+        z-index: 999;
+    }
+}
