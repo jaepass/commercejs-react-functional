@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onRemoveFromCart }) => {
+
+    const handleRemoveFromCart = () => {
+        onRemoveFromCart(item.id);
+    }
 
     return (
         <div className="cart-item">
@@ -13,6 +17,13 @@ const CartItem = ({ item }) => {
                     </div>
                     <div className="cart-item__details-price">{item.line_total.formatted_with_symbol}</div>
                 </div>
+                <button
+                    type="button"
+                    className="cart-item__remove"
+                    onClick={handleRemoveFromCart}
+                >
+                    Remove
+                </button>
         </div>
     );
 };

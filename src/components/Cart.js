@@ -1,7 +1,8 @@
 import React from 'react';
 import CartItem from './CartItem';
+import PropTypes from 'prop-types';
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, onRemoveFromCart }) => {
 
     const renderEmptyCart = () => {
         if (cart.total_unique_items > 0) {
@@ -21,6 +22,7 @@ const Cart = ({ cart }) => {
               {cart.line_items.map(lineItem => (
                 <CartItem
                   item={lineItem}
+                  onRemoveFromCart={onRemoveFromCart}
                   key={lineItem.id}
                   className="cart__inner"
                 />
@@ -43,3 +45,7 @@ const Cart = ({ cart }) => {
 }
 
 export default Cart;
+
+Cart.propTypes = {
+    cart: PropTypes.object,
+ };

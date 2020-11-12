@@ -79,13 +79,28 @@ const App = () => {
     });
   }
 
+  /**
+   * Removes line item from cart
+   * https://commercejs.com/docs/sdk/cart/#remove-from-cart
+   *
+   * @param {string} lineItemId ID of the line item being removed
+   */
+  const handleRemoveFromCart = (lineItemId) => {
+    commerce.cart.remove(lineItemId).then((resp) => {
+      setCart(resp.cart);
+    }).catch((error) => {
+      console.error('There was an error removing the item from the cart', error);
+    });
+  }
+
   return (
     <div className="app">
-      <CartNav 
-        cart={cart}
-      />
       <Hero
         merchant={merchant}
+      />
+      <CartNav 
+        cart={cart}
+        onRemoveFromCart={handleRemoveFromCart}
       />
       <ProductsList 
         products={products}
