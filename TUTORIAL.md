@@ -38,7 +38,7 @@ We mentioned you needing **Code Sandbox** above, so what exactly is it? Codesand
 So that's exactly what we're going to do: 
 1. Head on over to [CodeSandbox](http://codesandbox.io) and create your account if you haven't already.
 2. Create a CodeSandbox account
-3. scaffold a starter React template by clicking [here](https://codesandbox.io/s/new).
+3. Scaffold a starter React template by clicking [here](https://codesandbox.io/s/new).
 
 Choosing a React template in codesandbox or downloading it as a dependency is the same idea as installing [`create-react-app`](https://reactjs.org/docs/create-a-new-react-app.html) and getting a starting boilerplate of a single page application. You can read more about Create React App [here](https://github.com/facebook/create-react-app).
 
@@ -64,9 +64,9 @@ In most cases when you scaffold a React project, a typical project structure wou
 
 The `public` folder contains our assets, html static files and custom client side javascript files. `package.json` is used by npm (Node package manager) to save all the packages needed to deploy our app, but we don't have to worry about this because CodeSandbox installs and updates this file for us.
 
-In our `public`, we have a standard html file called `index.html`. This is our point of entry file where we have our root element, which is named by convention. If you scroll down to line 30 in the body element, you will see `<div id="root"></div>`. This is the root element where we will be injecting our application.
+In our `public` folder, we have a standard html file called `index.html`. This is our point of entry file where we have our root element, which is named by convention. If you scroll down to line 30 in the body element, you will see `<div id="root"></div>`. This is the root element where we will be injecting our application.
 
-The `src` folder contains all our React code and houses our `index.js`, `app.js` and later on our components when we start to create them. The file`index.js` is opened by default. You will see something like this:
+The `src` folder contains all our React code and houses our `index.js`, `app.js` and later on our components when we start to create them. In `index.js`, you will see something like this:
 
 ```js
 import React from "react";
@@ -83,7 +83,7 @@ ReactDOM.render(
 );
 ```
 
-Here we import the React library and we use the ReactDOM `render()` method in order to print the contents of our App component into the root div in our `index.html` that we specified above. Our main app component `App.js` has to be imported as well to be included in the render.  The `App.js` component is passed in as the first argument in the render function and the `rootElement` as the second argument. That will tell React to render the app component and transform it into an element using the `React.createElement` method at build time to the index page. We will be stripping out all the scaffolded code in the component `App.js` and rebuilding later on.
+Here we import the React library and we use the ReactDOM `render()` method in order to print the contents of our App component into the root div in our `index.html` that we specified above. Our main app component `App.js` has to be imported as well to be included in the render.  The `App.js` component is passed in as the first argument in the render function and the `rootElement` as the second argument. That will tell React to render the app component and transform it into an element using the `React.createElement` method at build time to the index page. We will be stripping out all the scaffolded code in the component `App.js` and rebuilding it later on.
 
 ```js
 import React from "react";
@@ -99,7 +99,7 @@ export default function App() {
 }
 ```
 
-The App function in `App.js` represents a React function component. In React, components can be defined as class components or function components. We will get into explaining more about these components later in the tutorial. You can create your components as a individual files (Single File Component - SFC). In React, html-like tags which are what we call JSX can be passed in the render function and be returned. The JSX inside the return function is what the `App.js` will render out. 
+The App function in `App.js` represents a React function component. In React, components can be defined as class components or function components. We will get into explaining more about these components later in the tutorial. You can create your components as a individual files (Single File Component - SFC). In React, html-like tags which are what we call JSX can be passed in the return statement to be returned. The JSX inside the return function is what the `App.js` will render out. JSX stands for JavaScript XML and is a syntax extension to JavaScript that allows you to write markup inside a React component.
 
 > 💡 **Tip** 
 
@@ -126,7 +126,7 @@ In a standard local development environment, the Chec/Commerce.js SDK can be ins
 
 2. Install via CDN by included this script `<script type="text/javascript" src="https://cdn.chec.io/v2/commerce.js"></script>` in the `index.html` file.
 
-Since we are using Codesandbox, we can conveniently add a dependency on the left sidebar. So let's go ahead and do that! Click on **Add dependency** and in the search field type in `@chec/commerce.js` and select the option which is the latest 2.1.1 version.
+Since we are using Codesandbox, we can conveniently add a dependency on the left sidebar. So let's go ahead and do that! Click on **Add dependency** and in the search field type in `@chec/commerce.js` and select the first option which is the latest version.
 
 > 💡 **Tip**
 
@@ -162,14 +162,7 @@ Commerce.js was built with all the frontend functionalities you would need to bu
 One of the main resources in Chec is the [Products](https://commercejs.com/docs/sdk/products) endpoint. Commerce.js
 makes it seamless to fetch product data with its promise-based [method](https://commercejs.com/docs/sdk/products#list-products) `commerce.products.list()`. This request would make a call to the `GET v1/products` API endpoint and return a list of product data. Open up your `App.js` file and delete the code that came with creating a new React app and we will write this file from scratch.
 
-Let's go back to our `App.js` and start to write out our first functional component. As mentioned earlier, React components can be defined in two ways,
-- Function components and
-- Class components
-
-For this application, we will be using function components. First, let's start to refactor our `App.js`.
-
-Import `commerce` as well as a `ProductsList` component which you'll create in the next
-section. We will also import a new module, `useState` which is the first React hook we'll be using to make our function component stateful. The first two API endpoint we will want to work with is the **Product** and **Merchant** endpoint. The **Product** endpoint will allow us to work with data such as the product name, product price, product description etc. The **Merchant** endpoint will contain information such as the e-commerce business name and contact details.
+Let's get to writing out our first functional component in `App.js`. Import `commerce` as well as a new module, `useState` which is the first React hook we'll be using to make our function component stateful. The first two API endpoint we will want to work with is the **Products** and **Merchant** endpoint. The **Products** endpoint will allow us to work with data such as the product name, product price, product description etc. The **Merchant** endpoint will contain information such as the e-commerce business name and contact details.
 
 ```js
 // src/App.js
@@ -177,7 +170,6 @@ import React, { useState } from 'react';
 import { commerce } from './lib/Commerce';
 
 import './styles/scss/styles.scss'
-import ProductsList from './components/ProductsList';
 
 const App = () => {
   const [merchant, setMerchant] = useState({});
@@ -200,7 +192,7 @@ After the opening of our `App` function, we need to destructure and return `prod
 
 You can now make your first Commerce.js request! Create a function called `fetchProducts()` in the component and make a request to the products endpoint using the Commerce.js method `commerce.products.list()`.
 
-```jsx
+```js
 /**
  * Fetch products data from Chec and stores in the products data object.
  * https://commercejs.com/docs/sdk/products
@@ -214,20 +206,43 @@ const fetchProducts = () => {
 }
 ```
 
-Inside the function, use the `commerce` object to access the `products.list()` method for access to product data. [`commerce.products.list()`](https://commercejs.com/docs/sdk/products#list-products) is a
+Inside the function, we use the `commerce` object to access the `products.list()` method for access to product data. [`commerce.products.list()`](https://commercejs.com/docs/sdk/products#list-products) is a
 promise-based function call that will resolve the request and `then()` sets the response data with `setProducts` into
 the `products` state key created earlier. In Chec, product is returned in an object called `data`, which is why we set the response as `product.data`. The `catch()` method catches any errors in the case that the request to the server fails.
 
-Of course simply creating the function does not do anything as you have yet to call this function. When the app
-component mounts to the DOM, we will use our next React hook `useEffect()` to call the fetching of data. It is a React lifecycle method that helps to call functions when the component first mounts to the DOM. Since we are loading data from a remote endpoint, we want to invoke the `fetchProducts()` function to update the state with the returned products products so that we can render our updated data.
+Next function we will create is fetching the merchant details. So let's mirror the above `fetchProducts()` function:
+
+```js
+/**
+ * Fetch merchant details
+ * https://commercejs.com/docs/sdk/full-sdk-reference#merchants
+ */
+const fetchMerchantDetails = () => {
+commerce.merchants.about().then((merchant) => {
+    setMerchant(merchant);
+}).catch((error) => {
+    console.log('There was an error fetch the merchant details', error)
+});
+}
+```
+
+Of course simply creating the functions do not do anything as you have yet to call them. When the app
+component mounts to the DOM, we will use our next React hook `useEffect()` to call the fetching of data. It is a React lifecycle hook also called side effect, that helps to call functions after the component first renders to the DOM and also anytime the DOM updates. Since we are loading data from a remote endpoint, we want to invoke the `fetchProducts()` function to update the state with the returned products so that we can render our updated data.
+
+First import `useEffect` from React in our import statement at the very top `import React, { useState, useEffect } from 'react';`.
+
+Then we can use the function like so:
 
 ```jsx
 useEffect(() => {
-  fetchProducts();
+    fetchMerchantDetails();
+    fetchProducts();
 }, []);
 ```
 
-Below is the expected returned data (abbreviated):
+Above, we pass in our effect as a function `fetchProducts()` and also by leaving the second argument array empty, this method will run once before the initial render.
+
+Below is the expected returned products data (abbreviated):
 
 ```json
 [
@@ -320,21 +335,6 @@ Below is the expected returned data (abbreviated):
 
 The data object contains all the property endpoints such as the product name, the product description, product price or any uploaded variants or assets. This data is exposed when you make a request to the API. As mentioned above, Commerce.js is a Software Development Kit(SDK) that comes with abstracted axios promise-based function calls that will help to fetch data from the endpoints. The public key access that we briefed over above is a public token key from a merchant store. This account already has products and products information uploaded to the Chec dashboard for us to run a demo store with. 
 
-Now add the empty `<ProductsList
-/>` component to your render function:
-
-```jsx
-return (
-  <div className="app">
-    <ProductsList />
-  </div>
-);
-```
-
-Destructure `products` from state to make it a little cleaner. You'll need to pass the `products` property as an argument
- to your `ProductsList` component. This means that the value of the `ProductsList` component's prop
-`products` will be resolved from the parent (`App`) component's state, and will update automatically whenever it changes.
-
 ## Start to style your components
 
 Before we go any further, let's start to port in some styles so we can start to make our UI look slick! We will be using SCSS, a CSS style compiler to style our application. Please note that we will not be going into styling details but will only go over the high-level of porting in the styles. First install `node-sass` by adding it as a dependency in the left sidebar or alternatively in a local environment by running the command below.
@@ -360,12 +360,15 @@ In the components folder, create a file named `_products.scss` and copy in the b
 .products {
     display: block;
     margin: 3rem;
+
     @include md {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         margin: 10rem;
     }
+
     .product {
+
         &__card {
             width: 55%;
             margin: auto;
@@ -373,9 +376,10 @@ In the components folder, create a file named `_products.scss` and copy in the b
             margin-bottom: 0;
             padding-bottom: 2rem;
         }
+
         &__image {
             border: 2px solid $text-primary;
-            width: 90%;
+            width: 100%;
         }
     
         &__name {
@@ -415,6 +419,7 @@ In the components folder, create a file named `_products.scss` and copy in the b
             &:hover {
                 background-color: lighten(#EF4E42, 5);
             }
+
             @include sm {
                 margin-top: 0;
             }
@@ -424,22 +429,28 @@ In the components folder, create a file named `_products.scss` and copy in the b
 ```
 
 Now in the global folder, create `_base.scss`, `_body.scss` and `_mixins.scss` and copy in the respective code below.
+
 ```css
 /* _base.scss */
 // Font styles
 $font-primary: 'Amiko', sans-serif;
 $font-secondary: 'Adamina', serif;
+
 // Colors
 $bg-color: #E8E2D7;
+
 $text-primary: #292B83;
 $text-grey: rgb(67, 67, 67);
+
 $color-accent: #EF4E42;
+
 // Media query sizes
 $sm-width: 576px;
 $md-width: 768px;
 $lg-width: 992px;
-$xl-width: 1200px;
+$xl-width: 1200px
 ```
+
 ```css
 /* _body.scss */
 body {
@@ -447,6 +458,7 @@ body {
   background-color: $bg-color;
 }
 ```
+
 ```css
 /* _mixins.scss */
 @mixin small-xs {
@@ -454,26 +466,31 @@ body {
     @content;
   }
 }
+
 @mixin sm {
   @media (min-width: #{$sm-width}) {
     @content;
   }
 }
+
 @mixin md {
   @media (min-width: #{$md-width}) {
     @content;
   }
 }
+
 @mixin lg {
   @media (min-width: #{$lg-width}) {
     @content;
   }
 }
+
 @mixin xl {
   @media (min-width: #{$xl-width}) {
     @content;
   }
 }
+
 @mixin md-max {
   @media (max-width: #{$lg-width}) {
     @content;
@@ -487,38 +504,46 @@ Lastly as mentioned, you'll need to now import those created files in the style 
 @import "global/base";
 @import "global/body";
 @import "global/mixins";
-@import "components/product";
+@import "components/products";
+```
+
+After importing the base styles, let's also import in the fonts we'll be using from Google Fonts in `public/index.html`.
+
+```html
+<!-- Load Google fonts -->
+<link href="https://fonts.googleapis.com/css?family=Amiko:400,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Adamina&display=swap" rel="stylesheet">
 ```
 
 Now that all the styles are written and imported, you should start to see the styles pull through when you render your components later.
 
 ## Create our product item component
 
-The nature of React and most modern JavaScript frameworks is to separate your code into components. Components are a way to encapsulate a group of elements for reuse throughout your application. You'll be creating two components for products, one will be for the single product item and another for the list of product items.
+The nature of React and most modern JavaScript frameworks is to separate your code into components. Components are a way to encapsulate a group of elements for reuse throughout your application. You'll be creating two components for products, one will be for the single product item and another for the list of product items. In your components, we will also start to deal with props. Props are used to pass data from parent components down to the child components.
+As your app grows, it is generally good practice to validate your props for type checking and debugging. We will install the `prop-types` library to do so.
 
-Start by creating a class component and name it `ProductItem.js` in `src/components`. This component will render the individual product card. In your render function destructure `product` from your props. You will reference this
-property to access each product's image, name, description, and price via `.media.source`, `.name`, `.description` and `.price` in the return statement.
+```bash
+yarn add prop-types
+# OR
+npm install prop-types
+```
 
-Product descriptions return HTML. To strip HTML from the product description string, using [this `string-strip-html`](https://codsen.com/os/string-strip-html/) handy library will do the trick. Install this library by running `yarn add string-strip-html` or `npm i string-strip-html`. After installing, import the module in and pass in the product description to the `stripHtml` function.
+Going back to our created `ProductItem.js`, start by creating a function component and name it `ProductItem`. This component will render the individual product card. We then pass in the `product` parameter which the parent component will parse out as each individual product object. You will reference this property to access each product's image, name, description, and price via `.media.source`, `.name`, `.description` and `.price` in the return statement.
+
+In Chec, product descriptions return HTML which means if we were to render out `product.description`, we would get a string that returns the html tags along with the description. In general, setting HTML from code is risky because it’s easy to inadvertently expose your users to a cross-site scripting (XSS) attack. So, you can set HTML directly from React, but you have to type out `dangerouslySetInnerHTML` and pass an object with a `__html` key, to remind yourself that it might be dangerous. But because we know we can trust the API responses, this is the best approach to take to render out our product description.
 
 ```jsx
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ProductItem = ({ product, onAddToCart }) => {
-
-  const description = {__html: product.description};
-
-  const handleAddToCart = () => {
-    onAddToCart(product.id, 1);
-  }
+const ProductItem = ({ product }) => {
 
   return (
     <div className="product__card">
       <img className="product__image" src={product.media.source} alt={product.name} />
       <div className="product__info">
         <h4 className="product__name">{product.name}</h4>
-        <p className="product__description" dangerouslySetInnerHTML={description}></p>
+        <p className="product__description" dangerouslySetInnerHTML={{__html: product.description}}></p>
         <div className="product__details">
           <p className="product__price">
             {product.price.formatted_with_symbol}
@@ -543,19 +568,15 @@ ProductItem.propTypes = {
 ```
 
 As you saw earlier in the abbreviated JSON, the returned product data object comes with all the information that you
-need to build a product listing view. In the code snippet above, your `product` prop is being used to access the various
-properties. First, render an image tag with the `src` value of `product.media.source` as the values inside the curly
-braces dynamically binds to the attributes.
+need to build a product listing view. In the code snippet above, your `product` prop is being used to access the various properties. First, render an image tag with the `src` value of `product.media.source` as the values inside the curly braces dynamically binds to the attributes followed by the `product.name`, `product.description`, and `product.price`.
 
 ## Create our products list component
 
-It's now time to create a `ProductsList.js` component inside `src/components`. The `ProductsList` component will be another
-class component which will loop through and render a list of `ProductItem` components.
+It's now time to create a `ProductsList.js` component inside `src/components`. The `ProductsList` component will be another function component which will loop through and render a list of `ProductItem` components.
 
 First, import in the `ProductItem` component. Next, define a `products` prop. This will be provided by the parent component.
 
-In your return statement you need to use the `map` function
-to render a `ProductItem` component for each product in your `products` prop. You also need to pass in a unique identifier (`product.id`) as the `key` attribute - React will use it to determine which items in a list have changed and which parts of your application need to be re-rendered.
+In your return statement you need to use the `map` function to render a `ProductItem` component for each product in your `products` prop. You also need to pass in a unique identifier (`product.id`) as the `key` attribute - React will use it to determine which items in a list have changed and which parts of your application need to be re-rendered.
 
 ```js
 import React from 'react';
@@ -587,7 +608,7 @@ ProductsList.propTypes = {
 
 This component will be a bit bare-boned for now except for looping through a `ProductItem` component.
 
-With both your product item and list components created, go back to `App.js` to render the `<ProductsList />` and pass in the `products` prop with the returned product data as the value.
+With both your product item and list components created, go back to `App.js` to render the `<ProductsList />` and pass in the `products` prop with the returned product data as the value. This means that the value of the `ProductsList` component's prop `products` will be resolved from the parent (`App`) component's state, and will update automatically whenever it changes.
 
 ```js
 import React, { useState, useEffect } from "react";
@@ -595,17 +616,12 @@ import { commerce } from './lib/Commerce';
 
 import './styles/scss/styles.scss';
 
-import Hero from './components/Hero';
 import ProductsList from './components/ProductsList';
 
-library.add(faShoppingBag, faTimes);
-
 const App = () => {
-  const [merchant, setMerchant] = useState({});
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetchMerchantDetails();
     fetchProducts();
   }, []);
 
@@ -635,9 +651,6 @@ const App = () => {
 
   return (
     <div className="app">
-      <Hero
-        merchant={merchant}
-      />
       <ProductsList 
         products={products}
       />
@@ -646,6 +659,34 @@ const App = () => {
 };
 
 export default App;
+```
+
+Awesome you've now got a full products listing page pulling in data from an external API! Next, we can start to add some cart functionalities!
+
+## Add Cart
+
+In the app component, follow the same logic to fetch and retrieve your cart data after the component renders, the same as fetching your products. First lets add a cart state to store the cart data that will be returned under the products state.
+
+```js
+const [cart, setCart] = useState({});
+```
+
+Next, we will use another Commerce method to retrieve the current cart in session with `cart.retrieve()`. Commerce.js automatically creates a cart for you if one does not exist in the current browser session. Commerce.js tracks the current cart ID with a cookie, and stores the entire cart and its contents for 30 days. This means that users returning to your website will still have their cart contents available for up to 30 days.
+
+With the Cart API and cart methods in Commerce.js, the otherwise complex cart logic can be easily implemented. Now let's add a new cart method underneath `fetchProducts()`.
+
+```js
+/**
+ * Retrieve the current cart or create one if one does not exist
+ * https://commercejs.com/docs/sdk/cart
+ */
+const fetchCart = () => {
+    commerce.cart.retrieve().then((cart) => {
+        setCart(cart);
+    }).catch((error) => {
+        console.log('There was an error fetching the cart', error);
+    });
+}
 ```
 
 ## Conclusion

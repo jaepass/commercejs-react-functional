@@ -11,7 +11,7 @@ const ProductItem = ({ product, onAddToCart }) => {
   const description = {__html: product.description};
 
   const handleAddToCart = () => {
-    onAddToCart(product.id, 1)
+    onAddToCart(product.id, 1);
   }
 
   return (
@@ -19,7 +19,7 @@ const ProductItem = ({ product, onAddToCart }) => {
       <img className="product__image" src={product.media.source} alt={product.name} />
       <div className="product__info">
         <h4 className="product__name">{product.name}</h4>
-        <p className="product__description" dangerouslySetInnerHTML={description}></p>
+        <p className="product__description" dangerouslySetInnerHTML={{__html: product.description}}></p>
         <div className="product__details">
           <p className="product__price">
             {product.price.formatted_with_symbol}
