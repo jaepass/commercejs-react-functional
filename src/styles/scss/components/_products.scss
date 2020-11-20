@@ -9,14 +9,12 @@
     }
 
     .product {
+        width: 55%;
+        margin: auto;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 2rem;
 
-        &__card {
-            width: 55%;
-            margin: auto;
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-bottom: 2rem;
-        }
 
         &__image {
             border: 2px solid $text-primary;
@@ -65,9 +63,7 @@
                 margin-top: 0;
             }
         }
-
     }
-
 }
 
 

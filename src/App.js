@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { commerce } from './lib/Commerce';
 
 import './styles/scss/styles.scss'
@@ -50,7 +50,6 @@ const App = () => {
       console.log('There was an error fetch the merchant details', error)
     });
   }
-
 
   /**
    * Retrieve the current cart or create one if one does not exist
@@ -106,8 +105,8 @@ const App = () => {
         products={products}
         onAddToCart={handleAddToCart}
       />
-  </div>
-  )
+    </div>
+  );
 };
 
 export default App;

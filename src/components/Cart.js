@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Cart = ({ cart, onRemoveFromCart }) => {
 
-    const renderEmptyCart = () => {
+    const renderEmptyMessage = () => {
         if (cart.total_unique_items > 0) {
           return;
         }
@@ -16,36 +16,36 @@ const Cart = ({ cart, onRemoveFromCart }) => {
         );
     }
 
-    const renderCart = () => {
-        return (
-            <>
-              {cart.line_items.map(lineItem => (
-                <CartItem
-                  item={lineItem}
-                  onRemoveFromCart={onRemoveFromCart}
-                  key={lineItem.id}
-                  className="cart__inner"
-                />
-              ))}
-              <div className="cart__total">
-                <p className="cart__total-title">Subtotal:</p>
-                <p className="cart__total-price">{cart.subtotal.formatted_with_symbol}</p>
-              </div>
-            </>
-        );
-    }
+    const renderItems = () => (
+        cart.line_items.map((lineItem) => (
+            <CartItem
+              item={lineItem}
+              onRemoveFromCart={onRemoveFromCart}
+              key={lineItem.id}
+              className="cart__inner"
+            />
+        ))
+    )
+
+    const renderTotal = () => (
+        <div className="cart__total">
+            <p className="cart__total-title">Subtotal:</p>
+            <p className="cart__total-price">{cart.subtotal.formatted_with_symbol}</p>
+        </div>
+    )
 
     return (
         <div className="cart">
             <h4 className="cart__heading">Your Shopping Cart</h4>
-            { renderEmptyCart() }
-            { renderCart() }
+            { renderEmptyMessage() }
+            { renderItems() }
+            { renderTotal() }
         </div>
-    )
-}
-
-export default Cart;
+    );
+};
 
 Cart.propTypes = {
     cart: PropTypes.object,
- };
+};
+
+export default Cart;
