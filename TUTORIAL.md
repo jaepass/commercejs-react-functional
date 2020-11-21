@@ -109,7 +109,7 @@ The App function in `App.js` represents a React function component. In React, co
 
 Now that we've walked through the starting structure in a React application, this is where the real fun begins. As you know we will be building a real-world e-commerce application sourcing data from an API data source. In order to do that, we will need to install a package dependency. So let's get right to it!
 
-## 2. Install our commerce API
+### 1.1 Install our commerce API
 
 We will be using a commerce API platform to source our products data. The commerce backend we will be using is called [Chec](https://commercejs.com/) and it comes with the handy [Commerce.js](https://github.com/chec/commerce.js) SDK packed with helper functions to handle our commerce logic in the frontend seamlessly. 
 
@@ -132,7 +132,7 @@ Since we are using Codesandbox, we can conveniently add a dependency on the left
 > The Commerce.js SDK is using the axios library under the hood. Axios is a promise-based HTTP client that works both in the browser and in other node.js environments.
 
 
-## Link up our Commerce instance
+### 1.2 Link up our Commerce instance
 
 The Commerce.js SDK comes packed with all the frontend oriented functionality to get a customer-facing web-store up and running. In order to utilize all the features of this commerce platform's SDK, we are going to import the module into a folder called `lib` so that we can have access to our Commerce object instance throughout our application.
 
@@ -154,7 +154,7 @@ Ok so what have we done here? First we import in the Commerce.js module which we
 
 Now that we've installed our commerce SDK and created our Commerce instance, we now have access to the Commerce object throughout our application!
 
-## Make your first request to fetch the products data
+## 2. Fetch products data from the Chec API
 
 Commerce.js was built with all the frontend functionalities you would need to build a complete eCommerce store. All you need to do is make requests to various Chec API endpoints, receive successful responses, then you have your raw data to output beautifully onto your web store.
 
@@ -313,7 +313,7 @@ Below is the expected returned products data (abbreviated):
 
 The data object contains all the property endpoints such as the product name, the product description, product price or any uploaded variants or assets. This data is exposed when you make a request to the API. As mentioned above, Commerce.js is a Software Development Kit(SDK) that comes with abstracted axios promise-based function calls that will help to fetch data from the endpoints. The public key access that we briefed over above is a public token key from a merchant store. This account already has products and products information uploaded to the Chec dashboard for us to run a demo store with. 
 
-## 3. Start to style your components
+## 3. Create our product components
 
 Before we go any further, let's start to port in some styles so we can start to make our UI look slick! We will be using SCSS, a CSS style compiler to style our application. Please note that we will not be going into styling details but will only go over the high-level of porting in the styles. First install `node-sass` by adding it as a dependency in the left sidebar or alternatively in a local environment by running the command below.
 
@@ -493,8 +493,6 @@ After importing the base styles, let's also import in the fonts we'll be using f
 
 Now that all the styles are written and imported, you should start to see the styles pull through when you create and render your components later.
 
-## 4. Create our product item component
-
 The nature of React and most modern JavaScript frameworks is to separate your code into components. Components are a way to encapsulate a group of elements for reuse throughout your application. You'll be creating two components for products, one will be for the single product item and another for the list of product items. In your components, we will also start to deal with props. Props are used to pass data from parent components down to the child components.
 As your app grows, it is generally good practice to validate your props for type checking and debugging. We will install the `prop-types` library to do so.
 
@@ -504,9 +502,9 @@ yarn add prop-types
 npm install prop-types
 ```
 
-Going back to our created `ProductItem.js`, start by creating a function component and name it `ProductItem`. This component will render the individual product card. We then pass in the `product` parameter which the parent component will parse out as each individual product item. You will reference this property to access each product's image, name, description, and price via `.media.source`, `.name`, `.description` and `.price` in the return statement.
+### 3.1 Create our product item component
 
-In Chec, product descriptions return HTML which means if we were to render out `product.description`, we would get a string that returns the html tags along with the description. In general, setting HTML from code is risky because it’s easy to inadvertently expose your users to a cross-site scripting (XSS) attack. You can set HTML directly from React, but you have to type out `dangerouslySetInnerHTML` and pass an object with a `__html` key, to remind yourself that it might be dangerous. But because we know we can trust the API responses, this is the best approach to take to render out our product description.
+Going back to our created `ProductItem.js`, start by creating a function component and name it `ProductItem`. This component will render the individual product card. We then pass in the `product` parameter which the parent component will parse out as each individual product item. You will reference this property to access each product's image, name, description, and price via `.media.source`, `.name`, `.description` and `.price` in the return statement.
 
 ```jsx
 import React from 'react';
@@ -539,9 +537,13 @@ ProductItem.propTypes = {
 export default ProductItem;
 ```
 
+In Chec, product descriptions return HTML which means if we were to render out `product.description`, we would get a string that returns the html tags along with the description. In general, setting HTML from code is risky because it’s easy to inadvertently expose your users to a cross-site scripting (XSS) attack. You can set HTML directly from React, but you have to type out `dangerouslySetInnerHTML` and pass an object with a `__html` key, to remind yourself that it might be dangerous. But because we know we can trust the API responses, this is the best approach to take to render out our product description.
+
 As you saw earlier in the abbreviated JSON, the returned product data object comes with all the information that you need to build a product listing view. In the code snippet above, your `product` prop is being used to access the various properties. First, render an image tag with the `src` value of `product.media.source` as the values inside the curly braces dynamically binds to the attributes followed by the `product.name`, `product.description`, and `product.price`.
 
-## 5. Create our products list component
+## **************** [ BREAKOUT SESSION ] ****************
+
+### 3.2 Create our products list component
 
 It's now time to create a `ProductsList.js` component inside `src/components`. The `ProductsList` component will be another function component which will loop through and render a list of `ProductItem` components.
 
@@ -620,7 +622,7 @@ export default App;
 
 Awesome you've now got a full products listing page pulling in data from an external API! Next, we can start to add some cart functionalities!
 
-## 6. Cart
+## 4. Add cart functionality
 
 In the app component, follow the same logic to fetch and retrieve your cart data after the component renders, the same as fetching your products. First let's add a cart state to store the cart data that will be returned under the products state.
 
@@ -681,7 +683,7 @@ The `cart.retrieve()` method will run, resolve, and the returned data will be st
 }
 ```
 
-## 7. Add to cart
+### 4.1 Add to cart
 
 The next functionality we will want to add is the ability to add products to a cart. We will be using the method `cart.add.` which calls the `POST v1/carts/{cart_id}` Cart API endpoint. With the cart object response, we can start to interact with and add the necessary event handlers to handle cart functionalities. Similar to how you can pass props as custom attributes, you can do that with native and custom events via callbacks. Because we will need to display a button to handle the add to cart functionality, let's go back to the `ProductItem.js` component to add that in the product card. Create a button tag and pass a function `handleAddToCart` to the React native `onClick` attribute which will be the function handler we will create to handle the event.
 
@@ -813,8 +815,9 @@ The above helper handle makes a call to the `commerce.cart.add method`. When the
 
 In the JSON response, you can note that the added product is now given associated `line_items` details such as its `line_item_id`, and `line_total`. With this data, we are now able to create the cart component and render out cart details like a list of added items.
 
+## **************** [ BREAKOUT SESSION ] ****************
 
-## 8. Create a cart component
+### 4.2. Create a cart component
 
 Let's first add our cart styles as we did with our products styles.
 
@@ -1024,7 +1027,7 @@ Lastly, we render our cart subtotal. We use the `cart.subtotal.formatted_with_sy
 
 Next, we will create the `CartItem.vue` component which will render each line item details such as the item image, name, price, and quantity.
 
-## 9. Create the cart item component
+### 4.3. Create the cart item component
 
 ```js
 import React from 'react';
@@ -1061,7 +1064,7 @@ export default CartItem;
 
 For now, build out the JSX template with the item prop to parse `item.media.source` as the `src` value, the `item.name`, the `item.quanity` and the `item.line_total.formatted_with_symbol`. Later on, we will be adding events to the buttons above to have the functionality to remove each line item.
 
-## 10. Add remove from cart
+## 4.4. Add remove from cart
 
 Still from the `CartItem.vue` component, we will implement the first cart line item action using the Commerce.js method `commerce.cart.remove()`. Let's add a `handleRemoveFromCart` function handler:
 
@@ -1128,8 +1131,6 @@ const handleRemoveFromCart = (lineItemId) => {
     });
 }
 ```
-
-## 11. Cart header
 
 ## Conclusion
 Awesome, there you have it! You have just created an e-commerce React application listing products on from an API backend! The next steps would be to add cart and checkout functionality to your application. Stay tuned for follow up workshops!
