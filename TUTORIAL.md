@@ -143,7 +143,7 @@ Let's go ahead and do that right now! In your `src` directory, we'll create a ne
 
 import Commerce from '@chec/commerce.js';
 
-export const commerce = new Commerce('pk_17695092cf047ebda22cd36e60e0acbe5021825e45cb7');
+export const commerce = new Commerce('pk_184625ed86f36703d7d233bcf6d519a4f9398f20048ec');
 ```
 
 Ok so what have we done here? First we import in the Commerce.js module which we will be using to communicate with the API platform, then we export an instance of `Commerce` and pass in a public key. The public key is needed to give us access to data in the Chec API.
@@ -720,9 +720,9 @@ const handleAddToCart = (productId, quantity) => {
 }
 ```
 
-The above helper handle makes a call to the `commerce.cart.add method`. You will also need to pass in parameters `productId` and `quantity` as variables for. When the promise resolves, we set the state again by updating the cart with the new cart data.
+The above helper handle makes a call to the `commerce.cart.add` method. You will also need to pass in parameters `productId` and `quantity` as variables for. When the promise resolves, we set the state again by updating the cart with the new cart data.
 
-Next, we need to pass in a callback `onAddToCart` in the `ProductsListing` component instance and attach the `handleAddToCart()` method in order make the "add to cart" request to the Chec API.
+Next, we need to define out callback as props and pass down the handler in the `ProductsListing` component instance. We attach the `handleAddToCart()` method in order make the "add to cart" request to the Chec API.
 
 ```jsx
 <ProductsList 
@@ -994,7 +994,6 @@ const Cart = ({ cart }) => {
         cart.line_items.map((lineItem) => (
             <CartItem
               item={lineItem}
-              onRemoveFromCart={onRemoveFromCart}
               key={lineItem.id}
               className="cart__inner"
             />
@@ -1031,7 +1030,7 @@ In `Cart.js`, import in a `CartItem` component which we will get to creating nex
 - Render the contents of the cart when it is not empty
 - Render the cart total
 
-This keeps our components clearn and in line with the conventions of function components in React. To render an empty cart message, we first check that the cart is empty and return early if it isn't. We use the `cart.total_unique_items` property to determine this and teturn a simple paragraph tag with a message in it.
+This keeps our components clean and in line with the conventions of function components in React. To render an empty cart message, we first check that the cart is empty and return early if it isn't. We use the `cart.total_unique_items` property to determine this and teturn a simple paragraph tag with a message in it.
 
 When rendering the cart items, we do the opposite check from `renderEmptyMessage()` by checking that the cart does indeed have items in it, and returning early if not. Next, we render out the individual line items that exists in the cart object when items are added to cart. We're rendering a `CartItem` component for each line item, providing the line item object as the item prop, and assigning it a unique key with the line item's id property.
 
@@ -1076,9 +1075,205 @@ export default CartItem;
 
 For now, build out the JSX template with the item prop to parse `item.media.source` as the `src` value, the `item.name`, the `item.quanity` and the `item.line_total.formatted_with_symbol`. Later on, we will be adding events to the buttons above to have the functionality to remove each line item.
 
-### 4.4. Add remove from cart
+### 4.4 Add header for cart
 
-Still from the `CartItem.vue` component, we will implement the first cart line item action using the Commerce.js method `commerce.cart.remove()`. Let's add a `handleRemoveFromCart` function handler:
+We need a header to be able to interact with our cart element so let's start to add the UI for a cart navigation. First let's port in some styles for that. Create a `_nav.scss` in `styles/components` and be sure to import that file in the styles index file.
+
+```css
+.nav {
+    position: fixed;
+    top: 1rem;
+    right: 1.25rem;
+    z-index: 999;
+
+    &__cart {
+        span {
+            font-size: 14px;
+            font-style: bold;
+            background-color: $color-accent;
+            color: white;
+            padding: 0 0.25rem;
+            margin-left: -0.5rem;
+            border-radius: 50%;
+            vertical-align: top;
+        }
+    }
+
+    &__cart-btn {
+        &--open {
+            border: none;
+        }
+
+        &--close {
+            background-color: $text-primary;
+            padding: 0 0.25rem;
+            color: white;
+            margin-left: -1.6rem;
+            margin-top: -0.25rem;
+            border-radius: 50%;
+            vertical-align: top;
+            width: 2.25rem;
+            height: 2.25rem;
+            border: none;
+            z-index: 999;
+            position: absolute;
+
+            svg {
+                margin-top: 0.375rem;
+            }
+        }
+    }
+}
+```
+
+Next, we are going to install some handy icons we'll need for our cart graphics. Let's install the font awesome library, there are three packages:
+
+```bash
+@fortawesome/react-fontawesome
+@fortawesome/fontawesome-svg-core
+@fortawesome/free-solid-svg-icons
+```
+
+Let's then to creating a component for the cart header navigation. Name the file `CartNav.js`.
+
+```js
+import React, { useState } from 'react';
+import Cart from './Cart';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faShoppingBag, faTimes } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faShoppingBag, faTimes);
+
+const CartNav = ({ cart, onRemoveFromCart }) => {
+    const [isCartVisible, setCartVisible] = useState(false);
+
+    const renderOpenButton = () => (
+        <button className="nav__cart-btn--open">
+            <FontAwesomeIcon size="2x" icon="shopping-bag" color="#292B83"/>
+            {cart !== null ? <span>{cart.total_items}</span> : ''}
+        </button>
+    )
+
+    const renderCloseButton = () => (
+        <button className="nav__cart-btn--close">
+            <FontAwesomeIcon size="1x" icon="times" color="white"/>
+        </button>
+    )
+
+    return (
+        <div className="nav">
+            <div className="nav__cart" onClick={() => setCartVisible(!isCartVisible)}>
+                { !isCartVisible ? renderOpenButton() : renderCloseButton() }
+            </div>
+            { isCartVisible &&
+                <Cart
+                    cart={cart}
+                    onRemoveFromCart={onRemoveFromCart}
+                />
+            }  
+        </div>
+    );
+};
+
+export default CartNav;
+```
+
+Going back to our `App.js`, we can now import our `CartNav.js` then render out our cart header and pass in our cart object.
+
+```js
+import CartNav from './components/CartNav';
+```
+
+```jsx
+return (
+    <div className="app">
+      <CartNav 
+        cart={cart}
+        onRemoveFromCart={handleRemoveFromCart}
+      />
+      <ProductsList 
+        products={products}
+        onAddToCart={handleAddToCart}
+      />
+    </div>
+);
+```
+
+### 4.5. Add remove from cart
+
+Let's go back to `App.js` to add the remove from cart functionality. We will create the event handler to make the request to the `commerce.cart.remove()` method. This is the event handler you pass to your `CartItem` in the a prop definition `onRemoveFromCart`.
+
+```js
+/**
+ * Removes line item from cart
+ * https://commercejs.com/docs/sdk/cart/#remove-from-cart
+ *
+ * @param {string} lineItemId ID of the line item being removed
+ */
+const handleRemoveFromCart = (lineItemId) => {
+    commerce.cart.remove(lineItemId).then((resp) => {
+        setCart(resp.cart);
+    }).catch((error) => {
+        console.error('There was an error removing the item from the cart', error);
+    });
+}
+```
+
+The `commerce.cart.remove()` method takes an `lineItemId` argument and once the promise resolves, the new cart object has one less of the removed line item (or the item removed entirely if you decrease down to a quantity of zero).
+
+We will need to keep passing down our callback function so let's head into `Cart.js` to pass the method down. Pass in the callback `onRemoveCart` in our `Cart.js` function parameter. As well as into the component instance of `<CartItem>` in the looping of each cart item render function. The final component should look like the below:
+
+```js
+import React from 'react';
+import CartItem from './CartItem';
+
+const Cart = ({ cart, onRemoveFromCart }) => {
+
+    const renderEmptyMessage = () => {
+        if (cart.total_unique_items > 0) {
+          return;
+        }
+    
+        return (
+          <p className="cart__none">
+            You have no items in your shopping cart, start adding some!
+          </p>
+        );
+    }
+
+    const renderItems = () => (
+        cart.line_items.map((lineItem) => (
+            <CartItem
+              item={lineItem}
+              onRemoveFromCart={onRemoveFromCart}
+              key={lineItem.id}
+              className="cart__inner"
+            />
+        ))
+    )
+
+    const renderTotal = () => (
+        <div className="cart__total">
+            <p className="cart__total-title">Subtotal:</p>
+            <p className="cart__total-price">{cart.subtotal.formatted_with_symbol}</p>
+        </div>
+    )
+
+    return (
+        <div className="cart">
+            <h4 className="cart__heading">Your Shopping Cart</h4>
+            { renderEmptyMessage() }
+            { renderItems() }
+            { renderTotal() }
+        </div>
+    );
+};
+
+export default Cart;
+```
+
+Next, in the `CartItem.vue` component, we will create a handler to call the callback function the first cart line item action using the Commerce.js method `commerce.cart.remove()`. Let's add a `handleRemoveFromCart` function handler:
 
 ```js
 const handleRemoveFromCart = () => {
@@ -1126,23 +1321,5 @@ CartItem.propTypes = {
 export default CartItem;
 ```
 
-Finally for the remove from cart functionality, let's go back to `App.js` and create the event handler to make the request to the `commerce.cart.remove()` method. This is the event handler you pass to your `CartItem` in the onRemoveFromCart prop. The `commerce.cart.remove()` method takes an `lineItemId` argument and once the promise resolves, the new cart object has one less of the removed line item (or the item removed entirely if you decrease down to a quantity of zero).
-
-```js
-/**
- * Removes line item from cart
- * https://commercejs.com/docs/sdk/cart/#remove-from-cart
- *
- * @param {string} lineItemId ID of the line item being removed
- */
-const handleRemoveFromCart = (lineItemId) => {
-    commerce.cart.remove(lineItemId).then((resp) => {
-        setCart(resp.cart);
-    }).catch((error) => {
-        console.error('There was an error removing the item from the cart', error);
-    });
-}
-```
-
 ## Conclusion
-Awesome, there you have it! You have just created an e-commerce React application listing products on from an API backend! The next steps would be to add cart and checkout functionality to your application. Stay tuned for follow up workshops!
+Awesome, there you have it! You have just created an e-commerce React application listing products with cart functionalities using an API backend!
