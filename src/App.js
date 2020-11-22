@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { commerce } from './lib/Commerce';
 
 import './styles/scss/styles.scss'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import Hero from './components/Hero';
 import ProductsList from './components/ProductsList';
 import CartNav from './components/CartNav';
-
-library.add(faShoppingBag, faTimes);
 
 const App = () => {
   const [merchant, setMerchant] = useState({});
@@ -35,7 +31,7 @@ const App = () => {
     commerce.merchants.about().then((merchant) => {
       setMerchant(merchant);
     }).catch((error) => {
-      console.log('There was an error fetch the merchant details', error)
+      console.log('There was an error fetching the merchant details', error)
     });
   }
 
@@ -47,7 +43,7 @@ const App = () => {
     commerce.products.list().then((products) => {
       setProducts(products.data);
     }).catch((error) => {
-      console.log('There was an error fetch the merchant details', error)
+      console.log('There was an error fetching the products', error)
     });
   }
 
