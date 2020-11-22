@@ -327,9 +327,10 @@ Next, let's go ahead and create a `styles` folder with a `scss` folder inside. I
 
 - src/
   - styles/
-    - components/
-    - global/
-    - styles.scss
+    -scss/
+      - components/
+      - global/
+      - styles.scss
 
 In the components folder, create a file named `_products.scss` and copy in the below code.
 
