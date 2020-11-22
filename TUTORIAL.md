@@ -510,7 +510,7 @@ Going back to our created `ProductItem.js`, start by creating a function compone
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ProductItem = ({ product, onAddToCart }) => {
+const ProductItem = ({ product }) => {
 
   const description = {__html: product.description};
 
@@ -541,7 +541,11 @@ In Chec, product descriptions return HTML which means if we were to render out `
 
 As you saw earlier in the abbreviated JSON, the returned product data object comes with all the information that you need to build a product listing view. In the code snippet above, your `product` prop is being used to access the various properties. First, render an image tag with the `src` value of `product.media.source` as the values inside the curly braces dynamically binds to the attributes followed by the `product.name`, `product.description`, and `product.price`.
 
-## **************** [ BREAKOUT SESSION ] ****************
+---
+
+## ******************************* [ BREAKOUT SESSION ] *******************************
+
+---
 
 ### 3.2 Create our products list component
 
@@ -685,7 +689,7 @@ The `cart.retrieve()` method will run, resolve, and the returned data will be st
 
 ### 4.1 Add to cart
 
-The next functionality we will want to add is the ability to add products to a cart. We will be using the method `cart.add.` which calls the `POST v1/carts/{cart_id}` Cart API endpoint. With the cart object response, we can start to interact with and add the necessary event handlers to handle cart functionalities. Similar to how you can pass props as custom attributes, you can do that with native and custom events via callbacks. Because we will need to display a button to handle the add to cart functionality, let's go back to the `ProductItem.js` component to add that in the product card. Create a button tag and pass a function `handleAddToCart` to the React native `onClick` attribute which will be the function handler we will create to handle the event.
+The next functionality we will want to add is the ability to add products to a cart. We will be using the method `cart.add.` which calls the `POST v1/carts/{cart_id}` Cart API endpoint. With the cart object response, we can start to interact with and add the necessary event handlers to handle cart functionalities. Similar to how you can pass props as custom attributes, you can do that with native and custom events via callbacks. Because we will need to display a button to handle the add to cart functionality, let's go back to the `ProductItem.js` component to add that in the product card under the price element. Create a button tag and pass a function `handleAddToCart` to the React native `onClick` attribute which will be the function handler we will create to handle the event.
 
 ```jsx
 <button
@@ -697,40 +701,7 @@ The next functionality we will want to add is the ability to add products to a c
 </button>
 ```
 
-To review, in React, data being passed down from a parent component to a child component is called props. In order to pass prop definitions to handle the events, we need to pass callback functions. After attaching a click event in the 'Quick add' button to call the `handleAddToCart` event handler, now create the handler function.
-
-```js
-const handleAddToCart = () => {
-    onAddToCart(product.id, 1);
-}
-```
-
-Inside the handler function `handleAddToCart()`, we execute a callback function which will be passed in from the `App.js` component via props - `onAddToCart`. Note that you will get to creating and passing this callback in the next section. A callback can receive any arguments, and the `App.js` component will have access to them. In this case, pass `product.id` and the quantity `1` as these are the request parameters for using the `commerce.cart.add()` method. Next, be sure to pass in `onAddToCart` as an argument to this component.
-
-```js
-const ProductItem = ({ product, onAddToCart })
-```
-
-Next, head back to `App.js` to pass in your callback `onAddToCart` in the `ProductsListing` component instance and attach a `handleAddToCart()` method in order make the "add to cart" request to the Chec API.
-
-```jsx
-<ProductsList 
-    products={products}
-    onAddToCart={handleAddToCart}
-/>
-```
-
-We'll need to make sure we continue to pass the add to cart method down to the `ProductsList` component as well as pass `onAddToCart` prop.
-
-```jsx
-<ProductItem
-    key={product.id}
-    product={product}
-    onAddToCart={onAddToCart}
-/>
-```
-
-The data `product.id` and the quantity `1` that were passed in to the callback function in `ProductItem` component will be received in the handling method. We'll now go ahead and create the helper handling method and call it `handleAddToCart()` in the App.js component. You will also need to pass in parameters `productId` and `quantity` as variables.
+To review, in React, data being passed down from a parent component to a child component is called props. In order to pass prop definitions to handle the events, we need to pass callback functions. After attaching a click event in the 'Quick add' button to call the `handleAddToCart` event handler, now create the handler function in the App component.
 
 ```js
 /**
@@ -749,7 +720,44 @@ const handleAddToCart = (productId, quantity) => {
 }
 ```
 
-The above helper handle makes a call to the `commerce.cart.add method`. When the promise resolves, we set the state again by updating the cart with the new cart data. Upon a successful post request to add a new product to cart, you should see the below example abbreviated response with a new line item in the cart object:
+The above helper handle makes a call to the `commerce.cart.add method`. You will also need to pass in parameters `productId` and `quantity` as variables for. When the promise resolves, we set the state again by updating the cart with the new cart data.
+
+Next, we need to pass in a callback `onAddToCart` in the `ProductsListing` component instance and attach the `handleAddToCart()` method in order make the "add to cart" request to the Chec API.
+
+```jsx
+<ProductsList 
+    products={products}
+    onAddToCart={handleAddToCart}
+/>
+```
+
+We'll need to make sure we continue to pass the add to cart method down to the `ProductsList` component as well as pass `onAddToCart` prop.
+
+```jsx
+<ProductItem
+    key={product.id}
+    product={product}
+    onAddToCart={onAddToCart}
+/>
+```
+
+Now going back to `ProductItem.js` is where this function will be called.
+
+```js
+const handleAddToCart = () => {
+    onAddToCart(product.id, 1);
+}
+```
+
+Inside the handler function `handleAddToCart()`, we execute the callback function which is passed in from the `App.js` component via the props we created - `onAddToCart`. A callback can receive any arguments, and the `App.js` component will have access to them. In this case, pass `product.id` and the quantity `1` as these are the request parameters for using the `commerce.cart.add()` method. Next, be sure to pass in `onAddToCart` as an argument to this component.
+
+```js
+const ProductItem = ({ product, onAddToCart })
+```
+
+The data `product.id` and the quantity `1` that were passed in to the callback function in `ProductItem` component will be received in the handling method.
+
+Upon a successful post request to add a new product to cart, you should see the below example abbreviated response with a new line item in the cart object:
 
 ```json
 {
@@ -815,7 +823,11 @@ The above helper handle makes a call to the `commerce.cart.add method`. When the
 
 In the JSON response, you can note that the added product is now given associated `line_items` details such as its `line_item_id`, and `line_total`. With this data, we are now able to create the cart component and render out cart details like a list of added items.
 
-## **************** [ BREAKOUT SESSION ] ****************
+---
+
+## ******************************* [ BREAKOUT SESSION ] *******************************
+
+---
 
 ### 4.2. Create a cart component
 
@@ -1064,7 +1076,7 @@ export default CartItem;
 
 For now, build out the JSX template with the item prop to parse `item.media.source` as the `src` value, the `item.name`, the `item.quanity` and the `item.line_total.formatted_with_symbol`. Later on, we will be adding events to the buttons above to have the functionality to remove each line item.
 
-## 4.4. Add remove from cart
+### 4.4. Add remove from cart
 
 Still from the `CartItem.vue` component, we will implement the first cart line item action using the Commerce.js method `commerce.cart.remove()`. Let's add a `handleRemoveFromCart` function handler:
 
