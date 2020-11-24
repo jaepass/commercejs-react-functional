@@ -5,20 +5,21 @@ Product listing page with cart functionalities using Commerce.js and React.
 **Note**
 - This app is built using [Commerce.js](https://commercejs.com/) v2 SDK
 
-## Overview
+## Requirements
 
-This README will guide you in getting up and running with a this project.## Prerequisites
+What you will need to start this project:
 
-- IDE or code editor of your choice
-- Node (v8.2.0 or higher)
-- NPM or Yarn
+- An IDE or code editor
+- NodeJS, at least v8
+- npm or yarn
 - Chec CLI `yarn global add @chec/cli`
+- React devtools (recommended)
 
 ## Setup
 
-### Create a Chec account. 
+### Create a Chec account (optional). 
 
-Now that you’ve installed Chec CLI globally, you will be able to access the list of `chec [COMMANDS]`, one of which is registering for a Chec account. Let’s go ahead and get that set up!
+This section is optional and if only you prefer to set up the store with your own product data. Now that you’ve installed Chec CLI globally, you will be able to access the list of `chec [COMMANDS]`, one of which is registering for a Chec account. Let’s go ahead and get that set up!
 
 ```bash
 # Open the Chec registration page in your browser
@@ -45,13 +46,13 @@ Replace the sample `.env.example` dotenv file at the root of the project to stor
 cp .env.example .env
 ```
 
-You can access your API key under in your Chec dashboard setup, then navigate to the Develop tab to copy your Public Key and Secret Key. Replace the provided `CHEC_PUBLIC_KEY` with your own key.
+You can access your API key under in your Chec dashboard setup, then navigate to the Develop tab to copy your Public Key. Alternatively, you can use the demo public key provided in the `.env.example` template.
 
 ```js
 // .env
 
-# Fill in your public key and secret key
-CHEC_PUBLIC_KEY=
+# Fill in your public key
+REACT_APP_CHEC_PUBLIC_KEY=
 CHEC_API_URL=https://api.chec.io
 NODE_ENV=
 ```
@@ -72,5 +73,4 @@ Now head on over to http://localhost:3000 after starting your development, your 
 
 - Framework - [React.js](https://reactjs.org)
 - eCommerce - [Chec/Commerce.js](https://commercejs.com)
-- Styling - [Bootstrap](https://getbootstrap.com) and [SASS](https://sass-lang.com)
-
+- Styling - [SASS](https://sass-lang.com)
